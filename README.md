@@ -217,7 +217,6 @@ Please ensure your commits are signed off using the `-s` flag to indicate you ag
 ## Issues and Discussions
 
 - **Found a bug?** Open an [issue](../../issues) with detailed steps to reproduce
-- **Have a question?** Start a [discussion](../../discussions) 
 - **Want to suggest an enhancement?** Open an [issue](../../issues) with the enhancement label or start a discussion
 
 When reporting issues, please include:
