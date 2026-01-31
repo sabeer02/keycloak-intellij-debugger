@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak-debug
+  template:
+    metadata:
+      labels:
+        app: keycloak-debug
+    spec:
+      containers:
+      - name: keycloak
+        image: my-keycloak:debug
+        imagePullPolicy: Never
+        command: ["/opt/keycloak/bin/kc.sh"]
+        args:
+        - "start-dev"
+        - "--http-port=8080"
+        env:
+        - name: JAVA_OPTS_APPEND
+          value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+        - name: KC_HOSTNAME_STRICT
+          value: "false"
+        - name: KC_LOG_LEVEL
+          value: "DEBUG"
+        ports:
+        - containerPort: 8080
+        - containerPort: 5005
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "768Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1536Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-debug
+spec:
+  selector:
+    app: keycloak-debug
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  - name: debug
+    port: 5005
+    targetPort: 5005
