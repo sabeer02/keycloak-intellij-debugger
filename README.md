@@ -37,7 +37,7 @@ This builds the distribution without running tests to save time.
 Navigate to the keycloak directory and verify the version:
 
 ```bash
-cd keycloak/
+cd keycloak/ #root repo
 cat pom.xml | grep -A 1 "<artifactId>keycloak-parent</artifactId>" | grep version
 ./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout
 ```
@@ -55,9 +55,11 @@ Note this version number - you'll need it for the Docker build.
 Navigate to the container directory and build the Docker image:
 
 ```bash
-cd keycloak/quarkus/container
+cd ./quarkus/container
 ```
-
+```bash
+cp ../dist/target/keycloak-999.0.0-SNAPSHOT.tar.gz .
+```
 Build with the version from step 2:
 
 ```bash
